@@ -1,9 +1,9 @@
-import { all } from "redux-saga/effects";
+import { all, fork } from "redux-saga/effects";
 
-import getAccounts from "pages/Home/saga";
+import { homeSaga } from "pages/Home/saga";
 
 function* rootSaga() {
-  yield all([getAccounts()]);
+  yield all([fork(homeSaga)]);
 }
 
 export default rootSaga;

@@ -1,10 +1,9 @@
-import axios from "axios";
-import { call, take, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import request from "utils/request";
 import { actions } from "./slice";
 import { IAccounts } from "./types";
 
-function* getOnlineAccounts() {
+function* getAccounts() {
   try {
     const response: IAccounts[] = yield call(request.get, {
       url: "accounts",
@@ -15,4 +14,7 @@ function* getOnlineAccounts() {
     yield put(actions.getAccountsError());
   }
 }
-export default getOnlineAccounts;
+
+export function* homeSaga() {
+  yield takeLatest(actions.getAccounts.type, getAccounts);
+}
