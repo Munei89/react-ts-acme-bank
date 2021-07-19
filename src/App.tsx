@@ -1,11 +1,11 @@
 import React from "react";
 import { Provider } from "react-redux";
 
-import "components/App.scss";
+import "App.scss";
 import logo from "logo.svg";
 
 import store from "store";
-import Network from "components/Network";
+import Home from "pages/Home";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
           <p>
             Edit <code>src/components/App.tsx</code> and save to reload.
           </p>
-          <Network />
+          <Home />
         </header>
       </div>
     </Provider>
