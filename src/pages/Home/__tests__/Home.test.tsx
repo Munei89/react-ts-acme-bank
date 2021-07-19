@@ -2,15 +2,15 @@ import React from "react";
 
 import renderWithRedux from "test-helpers/renderWithRedux";
 
-import Network from "components/Network";
+import Home from "../Home";
 
 const store = {
-  network: {
+  userAccouts: {
     online: true,
   },
 };
 
-test("shows online status", () => {
-  const { container } = renderWithRedux(<Network />, store);
+test("Render Home", () => {
+  const { container } = renderWithRedux(<Home />, store);
   expect(container).toHaveTextContent("Network is Online");
 });

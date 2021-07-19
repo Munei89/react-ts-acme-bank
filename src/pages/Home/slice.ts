@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ContainerState, IAccounts } from "./types";
 
-const initialState: ContainerState = {
+export const initialState: ContainerState = {
   userAccounts: [],
   loading: false,
   error: false,

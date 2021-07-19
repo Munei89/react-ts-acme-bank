@@ -4,7 +4,7 @@ import { ThunkAction } from "redux-thunk";
 import { accountReducer } from "pages/Home/slice";
 
 const reducer = combineReducers({
-  userAccounts: accountReducer,
+  home: accountReducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;

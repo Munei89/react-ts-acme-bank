@@ -1,9 +1,9 @@
 import { all } from "redux-saga/effects";
 
-import watchOnlineStatus from "./onlineSaga";
+import getAccounts from "pages/Home/saga";
 
 function* rootSaga() {
-  yield all([watchOnlineStatus()]);
+  yield all([getAccounts()]);
 }
 
 export default rootSaga;
