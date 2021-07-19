@@ -59,7 +59,7 @@ async function request(
   options?: RequestInit
 ): Promise<{} | { error: ResponseError }> {
   const API_HOST = "/api/";
-  const { url, auth } = endpointObj;
+  const { url } = endpointObj;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",

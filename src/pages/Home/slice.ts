@@ -26,9 +26,6 @@ const userAccountSlice = createSlice({
   },
 });
 
-// export const { actions } = userAccountSlice;
-
-// export default userAccountSlice.reducer;
 export const {
   actions,
   reducer: accountReducer,

@@ -1,24 +1,27 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { Layout } from "antd";
 
 import "App.scss";
-import logo from "logo.svg";
-
 import store from "store";
 import Home from "pages/Home";
+
+import { StyledContent, StyledHeaderText } from "./styles";
+
+const { Header } = Layout;
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/components/App.tsx</code> and save to reload.
-          </p>
+      <Layout className="layout">
+        <Header>
+          <StyledHeaderText>ACME BANK</StyledHeaderText>
+        </Header>
+        <StyledContent>
           <Home />
-        </header>
-      </div>
+        </StyledContent>
+      </Layout>
+      ,
     </Provider>
   );
 };
