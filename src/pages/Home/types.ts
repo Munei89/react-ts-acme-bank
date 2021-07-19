@@ -3,12 +3,13 @@ export interface AccountState {
   userAccounts: IAccounts[];
   loading: boolean;
   error: boolean;
+  withdrawal: boolean;
 }
 
 export interface IAccounts {
   account_number: string | number;
   account_type: string;
-  balance: string | number;
+  balance: string;
 }
 
 export enum EAccountType {

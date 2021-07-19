@@ -8,6 +8,7 @@ import { IAccounts } from "./types";
 
 const Home: React.FC = () => {
   const [currentAccounts, setCurrentAccounts] = useState<IAccounts[]>([]);
+  const [balance, setBalance] = useState<number>(0);
   const { userAccounts, loading, error } = selectState();
   const dispatch = useDispatch();
 
@@ -16,11 +17,16 @@ const Home: React.FC = () => {
 
     if (userAccounts.length) {
       setCurrentAccounts(userAccounts);
+      const totalBalance = currentAccounts.reduce(
+        (a, b) => a + parseFloat(b.balance),
+        0
+      );
+      setBalance(totalBalance);
     }
-  }, [dispatch, userAccounts.length]);
+  }, [dispatch, userAccounts.length, currentAccounts]);
 
   const requestWithdrawal = (accountNumber: string | number) => {
-    console.log(accountNumber);
+    dispatch(actions.withdrawRequest({ accountNumber: accountNumber }));
   };
 
   if (loading) {
@@ -34,14 +40,14 @@ const Home: React.FC = () => {
   return (
     <>
       <Row>
-        <Col>
+        <Col span={16}>
           <h2>Account Details</h2>
         </Col>
+        <Col span={8}>
+          <h2>Total Balance: {balance}</h2>
+        </Col>
       </Row>
-      <AccountsList
-        accounts={currentAccounts}
-        withdrawFunds={requestWithdrawal}
-      />
+      <AccountsList accounts={userAccounts} withdrawFunds={requestWithdrawal} />
     </>
   );
 };

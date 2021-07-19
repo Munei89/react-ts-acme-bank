@@ -5,6 +5,7 @@ export const initialState: ContainerState = {
   userAccounts: [],
   loading: false,
   error: false,
+  withdrawal: false,
 };
 
 const userAccountSlice = createSlice({
@@ -23,6 +24,33 @@ const userAccountSlice = createSlice({
       state.loading = false;
       state.error = true;
     },
+    withdrawRequest(
+      state,
+      action: PayloadAction<{
+        accountNumber: string | number;
+        amount?: string | number;
+      }>
+    ) {
+      state.loading = true;
+      state.userAccounts.find(
+        (v) => v.account_number === action.payload.accountNumber
+      )!.balance = "20";
+      state.withdrawal = true;
+      state.loading = false;
+    },
+    // withdrawRequestSuccess(
+    //   state,
+    //   action: PayloadAction<{
+    //     accountNumber: string | number;
+    //     amount?: string | number;
+    //   }>
+    // ) {
+    //   state.loading = true;
+    //   state.userAccounts.find(
+    //     (v) => v.account_number === action.payload.accountNumber
+    //   )!.balance = "20";
+    //   state.loading = false;
+    // },
   },
 });
 
