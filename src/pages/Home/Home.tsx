@@ -1,32 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { actions } from "./slice";
-import { Spin, Row, Col } from "antd";
+import { Spin, Row, Col, message } from "antd";
 import { useDispatch } from "react-redux";
 import selectState from "./selectors";
 import AccountsList from "components/AccountsList";
-import { IAccounts } from "./types";
+import { EAccountType } from "./types";
 
 const Home: React.FC = () => {
-  const [currentAccounts, setCurrentAccounts] = useState<IAccounts[]>([]);
   const [balance, setBalance] = useState<number>(0);
   const { userAccounts, loading, error } = selectState();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.getAccounts());
+  }, [dispatch]);
 
+  useEffect(() => {
     if (userAccounts.length) {
-      setCurrentAccounts(userAccounts);
-      const totalBalance = currentAccounts.reduce(
+      const totalBalance = userAccounts.reduce(
         (a, b) => a + parseFloat(b.balance),
         0
       );
       setBalance(totalBalance);
     }
-  }, [dispatch, userAccounts.length, currentAccounts]);
+  }, [userAccounts]);
 
-  const requestWithdrawal = (accountNumber: string | number) => {
-    dispatch(actions.withdrawRequest({ accountNumber: accountNumber }));
+  const warning = (err: string) => {
+    message.warning(err);
+  };
+
+  const requestWithdrawal = (
+    accountNumber: string | number,
+    overDraftLeft: number,
+    accountType: string
+  ) => {
+    const isSavings = accountType === EAccountType.SAVINGS;
+    // Get current balance
+    const currentBalance = userAccounts.find(
+      (item) => item.account_number === accountNumber
+    )!.balance;
+    let newBalance = Number(currentBalance) - 100;
+    const isValidWithdrawal = newBalance > -500 && Number(currentBalance) > 0;
+
+    // To prevent negative balance on Savings
+    if (newBalance < 0 && isSavings) {
+      return warning("You can only with draw the avalable amount from savings");
+    }
+
+    //Implementation using redux and dispatching a withdrawal action in a live instance this would do a api call to initiate a withrawal.
+    if (isValidWithdrawal && overDraftLeft > -500) {
+      dispatch(
+        actions.withdrawRequest({
+          accountNumber: accountNumber,
+          amount: newBalance,
+        })
+      );
+    } else {
+      const err = `You can only Withdraw ${overDraftLeft.toFixed(2)}`;
+      warning(err);
+    }
   };
 
   if (loading) {

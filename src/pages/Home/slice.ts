@@ -32,25 +32,16 @@ const userAccountSlice = createSlice({
       }>
     ) {
       state.loading = true;
-      state.userAccounts.find(
-        (v) => v.account_number === action.payload.accountNumber
-      )!.balance = "20";
+      let updatedAccounts = state.userAccounts.map((item) => {
+        if (item.account_number === action.payload.accountNumber) {
+          return { ...item, balance: `${action.payload.amount}` };
+        }
+        return item;
+      });
+      state.userAccounts = updatedAccounts;
       state.withdrawal = true;
       state.loading = false;
     },
-    // withdrawRequestSuccess(
-    //   state,
-    //   action: PayloadAction<{
-    //     accountNumber: string | number;
-    //     amount?: string | number;
-    //   }>
-    // ) {
-    //   state.loading = true;
-    //   state.userAccounts.find(
-    //     (v) => v.account_number === action.payload.accountNumber
-    //   )!.balance = "20";
-    //   state.loading = false;
-    // },
   },
 });
 
