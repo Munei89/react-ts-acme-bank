@@ -7,6 +7,10 @@ Create a React app with:
 - Redux-Saga
 - Sass
 
+## HTTP-MIDDLEWARE
+
+To configure the proxy to byp[ass CORS error, look at `src/setupProxy.js`
+
 ## Available Scripts
 
 In the project directory, you can run:
